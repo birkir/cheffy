@@ -9,6 +9,7 @@ import { authActions } from 'modules/auth';
 
 // Components
 import App from './components/App';
+import DevTools from './components/DevTools';
 import { RecipeList, RecipeDetail } from './routes/Recipes';
 
 // Store
@@ -21,12 +22,15 @@ const store = createStore({
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={App}>
-        <Route path="recipes" component={RecipeList}/>
-        <Route path="recipe/:recipeId" component={RecipeDetail} />
-      </Route>
-    </Router>
+    <div>
+      <Router history={browserHistory}>
+        <Route path="/" component={App}>
+          <Route path="recipes" component={RecipeList}/>
+          <Route path="recipe/:recipeId" component={RecipeDetail} />
+        </Route>
+      </Router>
+      <DevTools />
+    </div>
   </Provider>,
   document.querySelector('#app')
 );
