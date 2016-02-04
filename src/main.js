@@ -1,23 +1,32 @@
-import 'styles/styles.scss';
-
-import Firebase from 'firebase';
-import React from 'react';
+// Deps
+import React from 'react'
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import Firebase from 'firebase';
+import { render } from 'react-dom'
+import { Provider } from 'react-redux';
+import { Route, Router, browserHistory } from 'react-router';
+import { authActions } from 'modules/auth';
 
+// Components
+import App from './components/App';
+import { RecipeList, RecipeDetail } from './routes/Recipes';
+
+// Store
 import { FIREBASE_URL } from 'config';
-import { authActions, authRouteResolver } from 'modules/auth';
-import { Root } from 'components/root';
 import createStore from './store';
-
 
 const store = createStore({
   firebase: new Firebase(FIREBASE_URL)
 });
 
-store.dispatch(authActions.initAuth());
-
-
-ReactDOM.render((
-  <Root history={browserHistory} onEnter={authRouteResolver(store.getState)} store={store}/>
-), document.querySelector('.app-root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <Route path="recipes" component={RecipeList}/>
+        <Route path="recipe/:recipeId" component={RecipeDetail} />
+      </Route>
+    </Router>
+  </Provider>,
+  document.querySelector('#app')
+);

@@ -1,47 +1,29 @@
-[![Build Status](https://travis-ci.org/r-park/todo-react-redux.svg?branch=master)](https://travis-ci.org/r-park/todo-react-redux)
+[![Build Status](https://travis-ci.org/birkir/cheffy.svg?branch=master)](https://travis-ci.org/birkir/cheffy)
 
+# Cheffy web app
+A recipe book with direct ingredient relations to be able to build nutrient profile for recipe. Live link coming soon.
 
-# Todo app with React, Redux, and Firebase
-A simple Todo app example with `undelete` capability — built with React, Redux, and Firebase. Try the demo at <a href="https://todo-react-redux.firebaseapp.com" target="_blank">todo-react-redux.firebaseapp.com</a>.
-
+Built using
 - React
-- React-Redux
-- React-Router
 - Redux
-- Redux-Simple-Router
 - Babel
 - Firebase
-  - JSON Datastore
-  - OAuth authentication with GitHub, Google, and Twitter
-  - Hosting
 - Gulp
 - SASS
 - Webpack
-  - Webpack dev server
-  - Hot-reloading
-  - Compile SASS
-  - Inject css and js dependencies into html
-
 
 ## Installing Dependencies
 ```bash
 $ npm install
 ```
 
-#### Gulp v4 (optional)
-```bash
-$ npm install -g gulpjs/gulp-cli#4.0
-```
-The gulp tasks for this project require gulp v4-alpha. If you don't wish to globally install the v4 gulp-cli, you can run the gulp tasks using the locally installed gulp under `./node_modules/.bin` — for example:
-```bash
-$ ./node_modules/.bin/gulp run
-```
-
-
 ## Developing
 ```bash
 $ gulp
+or
+$ ./node_modules/.bin/gulp
 ```
+
 Executing the default `gulp` command will:
 - Build the project
 - Start the Webpack dev server at <a href="http://localhost:3000" target="_blank">localhost:3000</a>

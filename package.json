@@ -1,12 +1,12 @@
 {
-  "name": "todo-react-redux",
-  "version": "0.3.0",
-  "description": "Todo app with React, Redux, and Firebase",
-  "homepage": "https://github.com/r-park/todo-react-redux",
-  "repository": "https://github.com/r-park/todo-react-redux.git",
+  "name": "cheffy",
+  "version": "0.1.0",
+  "description": "Recipe book on steroids",
+  "homepage": "https://github.com/birkir/cheffy",
+  "repository": "https://github.com/birkir/cheffy.git",
   "author": {
-    "name": "Richard Park",
-    "email": "objectiv@gmail.com"
+    "name": "Birkir Gudjonsson",
+    "email": "birkir.gudjonsson@gmail.com"
   },
   "license": "MIT",
   "private": true,
@@ -20,6 +20,7 @@
     "babel-polyfill": "~6.3.14",
     "classnames": "~2.2.3",
     "firebase": "~2.3.2",
+    "object-assign": "^4.0.1",
     "react": "~0.14.7",
     "react-dom": "~0.14.7",
     "react-redux": "~4.2.0",

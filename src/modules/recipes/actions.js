@@ -1,32 +1,38 @@
 import {
-  CREATE_TASK_ERROR,
-  CREATE_TASK_SUCCESS,
-  DELETE_TASK_ERROR,
-  DELETE_TASK_SUCCESS,
-  UPDATE_TASK_ERROR,
-  UPDATE_TASK_SUCCESS
+  CREATE_RECIPE_ERROR,
+  CREATE_RECIPE_SUCCESS,
+  READ_RECIPE_ERROR,
+  READ_RECIPE_SUCCESS,
+  UPDATE_RECIPE_ERROR,
+  UPDATE_RECIPE_SUCCESS,
+  DELETE_RECIPE_ERROR,
+  DELETE_RECIPE_SUCCESS
 } from './action-types';
 
 
-export function createTask(title) {
+export function createRecipe (title) {
   return (dispatch, getState) => {
+
     const { auth, firebase } = getState();
 
-    firebase.child(`tasks/${auth.id}`)
-      .push({completed: false, title}, error => {
-        if (error) {
-          console.error('ERROR @ createTask :', error); // eslint-disable-line no-console
-          dispatch({
-            type: CREATE_TASK_ERROR,
-            payload: error
-          });
-        }
-      });
+    firebase.child(`recipes`)
+    .push({
+      completed: false,
+      title
+    }, error => {
+      if (error) {
+        console.error('ERROR @ createRecipe :', error); // eslint-disable-line no-console
+        dispatch({
+          type: CREATE_RECIPE_ERROR,
+          payload: error
+        });
+      }
+    });
   };
 }
 
 
-export function deleteTask(task) {
+export function deleteRecipe(task) {
   return (dispatch, getState) => {
     const { auth, firebase } = getState();
 
@@ -35,7 +41,7 @@ export function deleteTask(task) {
         if (error) {
           console.error('ERROR @ deleteTask :', error); // eslint-disable-line no-console
           dispatch({
-            type: DELETE_TASK_ERROR,
+            type: DELETE_RECIPE_ERROR,
             payload: error
           });
         }
@@ -44,7 +50,7 @@ export function deleteTask(task) {
 }
 
 
-export function undeleteTask() {
+export function undeleteRecipe() {
   return (dispatch, getState) => {
     const { auth, firebase, tasks } = getState();
     const task = tasks.deleted;
@@ -59,7 +65,7 @@ export function undeleteTask() {
 }
 
 
-export function updateTask(task, changes) {
+export function updateRecipe(task, changes) {
   return (dispatch, getState) => {
     const { auth, firebase } = getState();
 
@@ -68,7 +74,7 @@ export function updateTask(task, changes) {
         if (error) {
           console.error('ERROR @ updateTask :', error); // eslint-disable-line no-console
           dispatch({
-            type: UPDATE_TASK_ERROR,
+            type: UPDATE_RECIPE_ERROR,
             payload: error
           });
         }
@@ -77,30 +83,46 @@ export function updateTask(task, changes) {
 }
 
 
-export function registerListeners() {
+export function registerListeners(recipeId = null) {
+
+  if (recipeId) {
+    return (dispatch, getState) => {
+      const { auth, firebase } = getState();
+      const ref = firebase.child(`recipes/${recipeId}`);
+
+      ref.on('value', snapshot => {
+        console.log(snapshot);
+        return dispatch({
+          type: READ_RECIPE_SUCCESS,
+          payload: recordFromSnapshot(snapshot)
+        });
+      });
+    };
+  }
+
   return (dispatch, getState) => {
     const { auth, firebase } = getState();
-    const ref = firebase.child(`tasks/${auth.id}`);
+    const ref = firebase.child('recipes');
 
     ref.on('child_added', snapshot => dispatch({
-      type: CREATE_TASK_SUCCESS,
+      type: CREATE_RECIPE_SUCCESS,
       payload: recordFromSnapshot(snapshot)
     }));
 
     ref.on('child_changed', snapshot => dispatch({
-      type: UPDATE_TASK_SUCCESS,
+      type: UPDATE_RECIPE_SUCCESS,
       payload: recordFromSnapshot(snapshot)
     }));
 
     ref.on('child_removed', snapshot => dispatch({
-      type: DELETE_TASK_SUCCESS,
+      type: DELETE_RECIPE_SUCCESS,
       payload: recordFromSnapshot(snapshot)
     }));
   };
 }
 
 
-function recordFromSnapshot(snapshot) {
+function recordFromSnapshot (snapshot) {
   let record = snapshot.val();
   record.key = snapshot.key();
   return record;
