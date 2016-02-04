@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/birkir/cheffy.svg?branch=master)](https://travis-ci.org/birkir/cheffy)
 
 # Cheffy web app
-A recipe book with direct ingredient relations to be able to build nutrient profile for recipe. Live link coming soon.
+A recipe cookbook with direct ingredient relations to be able to build nutrient profile for recipe. Live link coming soon.
 
 Built using
 - React
